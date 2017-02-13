@@ -1,0 +1,109 @@
+<include file="./application/Web/View/header.html"/>
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+<style>
+	#bac_cent a{
+		color: #fff;
+		border-radius: 5px;
+		background:#fb821a;
+		width: 100%;
+		display: block;
+	}
+</style>
+	<!-- banner -->
+	<div class="main">
+		<div class="cent">
+			<div class="user_center">
+				<div class="user_menu">
+					<h1>个人中心</h1>
+					<li><a href="{:U('PersonalCenter/orderList',array('key'=>'all'))}">我的订单</a></li>
+					<li ><a href="{:U('PersonalCenter/address_list')}">收货地址</a></li>
+					<li class="action"><a href="{:U('PersonalCenter/password')}">修改密码</a></li>
+					<li ><a href="{:U('PersonalCenter/infomation')}">修改信息</a></li>
+					<img src="__PUBLIC__/Web/images/logo.png" />
+				</div>
+
+				<div class="user_address">
+					<div class="address_show">
+						<h1>修改密码</h1>
+						<img src="__PUBLIC__/Web/images/shadow.png" />
+					</div>
+					<form id="form_1">
+						<div class="gett_pwd">
+
+							<li><b>账号：</b> <span id="phone">{$username}</span></li>
+							<input type="hidden" name="username" value="{$username}"/>
+							<li><b>原密码：</b><input type="password" placeholder="请输入原密码" name="oldpwd" maxlength="20" />
+
+							</li>
+
+							<li><b>新的登录密码：</b><input type="password" id="newpwd" placeholder="请输入新的登录密码" name="newpwd" maxlength="20" />
+								<p>必须是6-20个英文字母、数字或符号，不能是纯数字</p>
+							</li>
+
+							<li><b>确认新的登录密码：</b><input type="password" placeholder="请再次输入新的登录密码" id="re_newpwd" maxlength="20" /></li>
+
+							<li><b>&nbsp;</b><input type="button" onclick="btn()" class="submit_add save" value="保 存" /></li>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+<!-- footer -->
+		<include file="./application/Web/View/footer.html"/>
+
+
+
+<!-- jquery -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.min.js"></script>
+<!-- 弹窗 -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.layer.js"></script>
+
+
+
+<script type="text/javascript">
+	$(function() {
+    var phone = $('#phone').text();
+
+    var mphone = phone.substr(0, 3) + '****' + phone.substr(7);
+    $('#phone').text(mphone)
+});
+</script>
+
+<script>
+	function btn(){
+
+
+		if( $('#newpwd').val() != $('#re_newpwd').val()){
+			layer.alert("两次密码必须一致", {icon: 2});
+			return false;
+		}
+
+
+
+        $.post('{:U("PersonalCenter/modifypasswd")}', $('#form_1').serialize(),function(data){
+            var json = eval("("+data+")");
+			if(json.code == 220 ){
+				layer.msg("您未登陆，请先登录",{icon: 2});window.location.href = "{:U('Login/index',array('key'=>1))}";
+			}
+            if(json.code == 300 ){
+                layer.msg("请补全表单");
+            }else if(json.code == 200){
+                layer.msg("修改成功");window.location.href = "{:U('Web/Login/index')}";
+            }else{
+                layer.msg(json.mark );
+            }
+        })
+
+
+
+	}
+</script>

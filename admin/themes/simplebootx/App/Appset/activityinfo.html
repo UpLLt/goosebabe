@@ -1,0 +1,54 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <div class="row-fluid">
+        <div class="span12">
+            <table class="table table-bordered">
+                <tr>
+                    <th width="20%">活动状态：</th>
+                    <td>
+                        {$data.status}
+                    </td>
+                </tr>
+                <tr>
+                    <th>活动开始日期：</th>
+                    <td>
+                        {$data.start_time}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>活动截至日期：</th>
+                    <td>
+                        {$data.end_time}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>奖金：</th>
+                    <td>
+                        {$data.bonus}
+                    </td>
+                </tr>
+                <tr>
+                    <th>奖励数量：</th>
+                    <td>
+                        {$data.parts}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>已发放：</th>
+                    <td>
+                        {$data.parts_hit|default = 0}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

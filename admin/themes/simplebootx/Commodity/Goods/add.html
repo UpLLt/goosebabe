@@ -1,0 +1,235 @@
+<admintpl file="header"/>
+<link href="__PUBLIC__/js/cityPicker/css/city-picker.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Goods/lists')}" target="_self">商品列表</a></li>
+        <li class="active"><a href="javascript:;">新增商品</a></li>
+    </ul>
+    <form action="{:U('Goods/add_post')}" method="post" class="form-horizontal"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span10">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="white-space:nowrap;">商品名称：</th>
+                        <td><input type="text" name="post[name]" required id="name" value="" style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">类型：</th>
+                        <td>
+                            <select name="post[category_id]">
+                                {$categoryoption}
+                            </select>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">品牌：</th>
+                        <td>
+                            <select name="post[brand_id]">
+                                {$brandoption}
+                            </select>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>价格：</th>
+                        <td><input type="number" name="post[price]" required id="price"
+                                   value=""
+                                   style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <th>原价：</th>
+                        <td><input type="number" name="post[original_price]" required id="original_price"
+                                   value=""
+                                   style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>销量：</th>
+                        <td><input type="number" name="post[sales_volume]" required id="sales_volume"
+
+                                   style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>关税：</th>
+                        <td><input type="number" name="post[tariff]" required id="tariff"
+                                   value=""
+                                   style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>库存：</th>
+                        <td><input type="number" name="post[inventory]" required id="inventory"
+                                   value=""
+                                   style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th>发货地：</th>
+                        <td><input type="text" name="post[ship_address]" required id="ship_address"
+                                   value=""
+                                   style="width: 400px">
+                        </td>
+                    </tr>
+
+                    <!--<tr>-->
+                        <!--<th>属性d：</th>-->
+                        <!--<td>-->
+                            <!--<div class="well">-->
+                                <!--123-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                    <tr>
+                        <th><b>商品封面图-APP</b></th>
+                        <td>
+                            <div style="text-align: left;">
+                                <input type="hidden" name="smeta[thumb]" id="thumb" value="">
+                                <a href="javascript:void(0);"
+                                   onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                                    <img src="__TMPL__Public/assets/images/default-thumbnail.png"
+                                         id="thumb_preview"
+                                         width="120" style="cursor: hand"/>
+                                </a>
+                                <input type="button" class="btn btn-small"
+                                       onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                       value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><b>商品封面图-PC</b></th>
+                        <td>
+                            <div style="text-align: left;">
+                                <input type="hidden" name="smeta[thumb_pc]" id="thumb_pc" value="">
+                                <a href="javascript:void(0);"
+                                   onclick="flashupload('thumb_images', '附件上传','thumb_pc',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                                    <img src="__TMPL__Public/assets/images/default-thumbnail.png"
+                                         id="thumb_pc_preview"
+                                         width="120" style="cursor: hand"/>
+                                </a>
+                                <input type="button" class="btn btn-small"
+                                       onclick="$('#thumb_pc_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                       value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th><b>商品热卖广告图</b></th>
+                        <td>
+                            <div style="text-align: left;">
+                                <input type="hidden" name="smeta[advertisement]" id="advertisement" value="">
+                                <a href="javascript:void(0);"
+                                   onclick="flashupload('thumb_images', '附件上传','advertisement',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                                    <img src="__TMPL__Public/assets/images/default-thumbnail.png"
+                                         id="advertisement_preview"
+                                         width="120" style="cursor: hand"/>
+                                </a>
+                                <input type="button" class="btn btn-small"
+                                       onclick="$('#advertisement_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                       value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th><b>精品图片</b></th>
+                        <td>
+                            <div style="text-align: left;">
+                                <input type="hidden" name="smeta[boutique]" id="boutique" value="">
+                                <a href="javascript:void(0);"
+                                   onclick="flashupload('thumb_images', '附件上传','boutique',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                                    <img src="__TMPL__Public/assets/images/default-thumbnail.png"
+                                         id="boutique_preview"
+                                         width="120" style="cursor: hand"/>
+                                </a>
+                                <input type="button" class="btn btn-small"
+                                       onclick="$('#boutique_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                       value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+
+                    <tr>
+                        <th>商品轮播</th>
+                        <td>
+                            <fieldset>
+                                <legend>图片列表</legend>
+                                <ul id="photos" class="pic-list unstyled"></ul>
+                            </fieldset>
+                            <a href="javascript:;"
+                               onclick="javascript:flashupload('albums_images', '图片上传','photos',change_images,'10,gif|jpg|jpeg|png|bmp,0','','','')"
+                               class="btn btn-small">选择图片</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>描述详情</th>
+                        <td>
+                            <script type="text/plain" id="content" name="post[content]"
+                                    style="width:80%x;height:500px;"></script>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        <a class="btn" href="{:U('Goods/lists')}">返回</a>
+    </form>
+</div>
+</body>
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script>
+    $(function () {
+        var ue = UE.getEditor('content', {
+            autoHeight: false,
+            autoHeightEnabled: false, //出现滚动条
+            elementPathEnabled: false  //去掉元素路径
+
+        });
+        //对编辑器的操作最好在编辑器ready之后再做
+        ue.ready(function () {
+            //设置编辑器的内容
+            ue.setContent('');
+            //获取html内容，返回: <p>hello</p>d
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,151 @@
+<include file="./application/Web/View/header.html"/>
+<!-- g公共部分 -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css"/>
+<!-- 字体图片 -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css"/>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css"/>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css"/>
+
+<!-- jquery -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.min.js"></script>
+
+<!-- 弹窗 -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.layer.js"></script>
+
+<style>
+    #bac_shop a {
+        color: #fff;
+        border-radius: 5px;
+        background: #fb821a;
+        width: 100%;
+        display: block;
+    }
+</style>
+
+
+<!-- banner -->
+<div class="main">
+    <div class="cent">
+        <div class="address_show shops">
+            <h1>确认订单信息</h1>
+            <img src="__PUBLIC__/Web/images/shadow.png"/>
+        </div>
+
+        <div class="shoping_address">
+
+            {$addressList}
+        </div>
+        <div class="shopping_cart">
+
+            <div class="cart_h1"><h1>订单信息</h1></div>
+            <div class="cart_shoping_top">
+                <li><span>商品</span></li>
+                <li><span>规格</span></li>
+                <li><span>价格</span></li>
+                <li><span>数量</span></li>
+                <li><span>小计</span></li>
+            </div>
+
+            <div class="cart_shoping_dow">
+
+                <foreach name="shop_list.lists" item="vo">
+                    <li>
+							<span>
+								<img src="{$vo.smeta}"/>
+								<p>{$vo.name}</p>
+								<p>商品属性：官方标配</p>
+							</span>
+                        <span><b class="cl900">	<p>商品属性：官方标配</p></b></span>
+                        <span><bac>￥{$vo.price}</bac><del>￥{$vo.original_price}</del></span>
+							<span>
+
+								<div>{$vo.quantity}</div>
+
+							</span>
+                        <span><b class="cl_fb8">￥{$vo.total_price}</b></span>
+
+                        <h1><p>配送方式：<b>海外直邮</b> 快递 ￥{$vo.tax} </p><span>合计（含运费）<b>￥{$vo.total_price}</b></span></h1>
+                    </li>
+                </foreach>
+
+
+            </div>
+
+            <div class="shoping_over_cart">
+                <div class="over_cart">
+                    <h1>实付款： <span>￥{$shop_list.total}</span></h1>
+                    <div class="adrs_cart">
+                        <div id="aaa">
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="over_sunbit">
+                        <!-- 去掉 a 标签  -->
+                        <form id="form_1">
+                            <input type="hidden" id="card_status" value="{$card_status.card_status}"/>
+                            <input type="hidden" name="cartid" value="{$shop_list.cartids}"/>
+                            <input type="hidden" id="addressid" name="addressid">
+                            <input type="button" onclick="btn()" value="提交订单"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- footer -->
+        <include file="./application/Web/View/footer.html"/>
+        <script type="text/javascript" src="__PUBLIC__/Web/js/layer.js"></script>
+        <script language=javascript>
+            $("#all").click(function () {
+                if (this.checked) {
+                    $("#shoping_all :checkbox").attr("checked", true);
+                } else {
+                    $("#shoping_all :checkbox").attr("checked", false);
+                }
+            });
+        </script>
+
+        <script type="text/javascript">
+            function cli() {
+                var addre_id = $("input[name='radio']:checked").val();
+                var action = "{:U('ShoppingCar/address')}";
+                $.post(action, {id: addre_id}, function (e) {
+                    $('#aaa').empty();
+                    $('#addressid').attr('value', addre_id);
+                    $('#aaa').html(e);
+                })
+            }
+
+            function btn() {
+
+                var status = $('#card_status').val();
+
+                if( status == 0 ){
+                    layer.msg("您需要在个人中心->修改信息中提交身份资料才可购买");
+                    return false;
+                }
+
+
+                $.post("{:U('ShoppingCar/carttopay')}", $('#form_1').serialize(), function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.code == 220) {
+                        layer.msg("您未登陆，请先登录", {icon: 2});
+                        window.location.href = "{:U('Login/index',array('key'=>1))}";
+                    }
+                    if (json.code == 300) {
+                        layer.alert("请选择收货地址", {icon: 2});
+                    } else if (json.code == 200) {
+                        window.location.href = json.datas.url;
+                    } else {
+                        layer.alert(json.mark, {icon: 2});
+                    }
+                })
+            }
+
+        </script>

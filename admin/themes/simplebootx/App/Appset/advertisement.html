@@ -1,0 +1,38 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Appset/index')}" target="_self">轮播图</a></li>
+        <li class="active"><a href="javascript:;">广告</a></li>
+        <li><a href="{:U('Appset/add')}" target="_self">新增</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Appset/advertisement')}">
+        名称：
+        <input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="请输入名称...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <table style="margin-top: 10px;" class="table table-hover table-bordered table-list" id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>缩略图</th>
+            <th>跳转链接</th>
+            <th>创建时间</th>
+            <th>修改时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {$categorys}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

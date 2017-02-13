@@ -1,0 +1,376 @@
+<include file="./application/Web/View/header.html"/>
+<!-- g公共部分 -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+<!-- 字体图片 -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+<style>
+	#bac_shop a{
+		color: #fff;
+		border-radius: 5px;
+		background:#fb821a;
+		width: 100%;
+		display: block;
+	}
+</style>
+<!-- banner -->
+<div class="main">
+	<div class="cent">
+		<div class="address_show shops">
+			<h1>我的购物车</h1>
+			<img src="__PUBLIC__/Web/images/shadow.png" />
+		</div>
+
+		<div class="shopping_cart">
+
+
+
+
+			<table id="cartTable">
+				<thead>
+				<tr>
+					<div class="shoping_top">
+						<li><input type="checkbox" class="check-all check checkbox" >全选</li>
+						<li><span>商品</span></li>
+						<li><span>价格</span></li>
+						<li><span>数量</span></li>
+						<li><span>小计</span></li>
+						<li><span>操作</span></li>
+					</div>
+
+				</tr>
+				</thead>
+				<tbody class="shoping_dow">
+				<foreach name="group" item="vo">
+					<tr>
+						<td class=""><input id="{$vo.cartid}" class="check-one check checkbox" type="checkbox"/></td>
+						<td class="goods">
+							<img src="{$vo.smeta}" />
+							<p>{$vo.product_name}</p>
+							<span>商品规格：{$vo.option_value_name}</span>
+						</td>
+						<td class="price">{$vo.price}</td>
+						<td class="count"><span class="reduce"></span><input class="count-input" readonly="readonly"  type="text" value="{$vo.quantity}"/><input type="hidden" value="{$vo.cartid}" ><input type="hidden" value="{$vo.inventory}" ><span readonly="readonly" class="add">+</span></td>
+						<td class="subtotal">{$vo.tital_price}</td>
+						<td class="operation"><span class="delete">删除</span></td>
+					</tr>
+				</foreach>
+				</tbody>
+			</table>
+
+			<div class="foot " id="foot">
+				<div class="shoping_over">
+					<label style="display: none" class="fl select-all"><input type="checkbox"  class="check-all check checkbox"/>&nbsp;全选</label>
+					<a class="fl delete" id="deleteAll" style="display: none" href="javascript:;">删除</a>
+					<form method="post" action="{:U('Web/ShoppingCar/cartSettlementBefore')}">
+						<input type="hidden" name="cartid" id="catred">
+
+						<input type="submit"  class="fr closing" value="结 算" />
+
+					</form>
+					<div class="fr total">合计：￥<span id="priceTotal">0.00</span></div>
+
+					<div class="fr selected" id="selected">已选商品<span id="selectedTotal">0</span>件</div>
+					<div class="selected-view" style="display:none;">
+						<div id="selectedViewList" class="clearfix">
+							<div><span>取消选择</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- footer -->
+	<include file="./application/Web/View/footer.html"/>
+
+	<!-- jquery -->
+	<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.min.js"></script>
+
+	<!-- 弹窗 -->
+	<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.layer.js"></script>
+
+
+	<script type="text/javascript" src="__PUBLIC__/Web/js/demo.js"></script>
+
+	<script>
+		/**
+		 * Created by an.han on 13-12-17.
+		 */
+		window.onload = function () {
+			if (!document.getElementsByClassName) {
+				document.getElementsByClassName = function (cls) {
+					var ret = [];
+					var els = document.getElementsByTagName('*');
+					for (var i = 0, len = els.length; i < len; i++) {
+
+						if (els[i].className.indexOf(cls + ' ') >=0 || els[i].className.indexOf(' ' + cls + ' ') >=0 || els[i].className.indexOf(' ' + cls) >=0) {
+							ret.push(els[i]);
+						}
+					}
+					return ret;
+				}
+			}
+
+			var table = document.getElementById('cartTable'); // 购物车表格
+			var selectInputs = document.getElementsByClassName('check'); // 所有勾选框
+			var checkAllInputs = document.getElementsByClassName('check-all') // 全选框
+			var tr = table.children[1].rows; //行
+			var selectedTotal = document.getElementById('selectedTotal'); //已选商品数目容器
+			var priceTotal = document.getElementById('priceTotal'); //总计
+			var deleteAll = document.getElementById('deleteAll'); // 删除全部按钮
+			var selectedViewList = document.getElementById('selectedViewList'); //浮层已选商品列表容器
+			var selected = document.getElementById('selected'); //已选商品
+			var foot = document.getElementById('foot');
+
+			// 更新总数和总价格，已选浮层
+			function getTotal() {
+				var seleted = 0;
+				var price = 0;
+				var HTMLstr = '';
+				var carted = '';
+
+				for (var i = 0, len = tr.length; i < len; i++) {
+					if (tr[i].getElementsByTagName('input')[0].checked) {
+						tr[i].className = 'on';
+						seleted += parseInt(tr[i].getElementsByTagName('input')[1].value);
+						carted += parseInt(tr[i].getElementsByTagName('input')[2].value)+',';
+
+						price += parseFloat(tr[i].cells[4].innerHTML);
+						HTMLstr += '<div><img src="' + tr[i].getElementsByTagName('img')[0].src + '"><span class="del" index="' + i + '">取消选择</span></div>'
+					}
+					else {
+						tr[i].className = '';
+					}
+				}
+				carted = carted.substring(0,carted.length-1)
+				$('#catred').val(carted);
+				selectedTotal.innerHTML = seleted;
+				priceTotal.innerHTML = price.toFixed(2);
+				selectedViewList.innerHTML = HTMLstr;
+
+				if (seleted == 0) {
+					foot.className = 'foot';
+				}
+
+
+
+			}
+
+			// 计算单行价格
+			function getSubtotal(tr) {
+				var cells = tr.cells;
+				var price = cells[2]; //单价
+				var subtotal = cells[4]; //小计td
+				var countInput = tr.getElementsByTagName('input')[1]; //数目input
+				var span = tr.getElementsByTagName('span')[1]; //-号
+				//写入HTML
+				subtotal.innerHTML = (parseInt(countInput.value) * parseFloat(price.innerHTML)).toFixed(2);
+				//如果数目只有一个，把-号去掉
+				if (countInput.value == 1) {
+					span.innerHTML = '';
+				}else{
+					span.innerHTML = '-';
+				}
+			}
+
+			// 点击选择框
+			for(var i = 0; i < selectInputs.length; i++ ){
+				selectInputs[i].onclick = function () {
+					if (this.className.indexOf('check-all') >= 0) { //如果是全选，则吧所有的选择框选中
+						for (var j = 0; j < selectInputs.length; j++) {
+							selectInputs[j].checked = this.checked;
+						}
+					}
+					if (!this.checked) { //只要有一个未勾选，则取消全选框的选中状态
+						for (var i = 0; i < checkAllInputs.length; i++) {
+							checkAllInputs[i].checked = false;
+						}
+					}
+					getTotal();//选完更新总计
+				}
+			}
+
+			// 显示已选商品弹层
+			selected.onclick = function () {
+				if (selectedTotal.innerHTML != 0) {
+					foot.className = (foot.className == 'foot' ? 'foot show' : 'foot');
+				}
+			}
+
+			//已选商品弹层中的取消选择按钮
+			selectedViewList.onclick = function (e) {
+				var e = e || window.event;
+				var el = e.srcElement;
+				if (el.className=='del') {
+					var input =  tr[el.getAttribute('index')].getElementsByTagName('input')[0]
+					input.checked = false;
+					input.onclick();
+				}
+			}
+
+			//为每行元素添加事件
+			for (var i = 0; i < tr.length; i++) {
+				//将点击事件绑定到tr元素
+				tr[i].onclick = function (e) {
+					var e = e || window.event;
+					var el = e.target || e.srcElement; //通过事件对象的target属性获取触发元素
+					var cls = el.className; //触发元素的class
+					var countInout = this.getElementsByTagName('input')[1]; // 数目input
+					var cartInout  = this.getElementsByTagName('input')[2];
+					var inven  = this.getElementsByTagName('input')[3];
+					var value = parseInt(countInout.value); //数目
+					var cartidid = parseInt(cartInout.value);
+					var inventory = parseInt(inven.value);
+					//通过判断触发元素的class确定用户点击了哪个元素
+
+
+					switch (cls) {
+						case 'add': //点击了加号
+
+							if(  value < inventory){
+								var z_value = value + 1;
+								countInout.value = z_value;
+								var action = "{:U('Web/ShoppingCar/editCart')}";
+								$.post(action,{cartid:cartidid,quantity:z_value},function(data){
+									var json = eval("("+data+")");
+									if(json.code == 220 ){
+										layer.msg("您未登陆，请先登录",{icon: 2});window.location.href = "{:U('Login/index')}";
+									}
+									if(json.code == 300 ){
+										layer.alert("参数不正确", {icon: 2});
+
+
+									}else if(json.code == 200){
+
+									}else{
+										layer.alert(json.mark, {icon: 2});return false;
+									}
+								})
+
+								countInout.value = z_value;
+								getSubtotal(this);
+							}
+
+
+							break;
+						case 'reduce': //点击了减号
+							if (value > 1) {
+
+								var z_value = value - 1;
+								countInout.value = z_value;
+								var action = "{:U('Web/ShoppingCar/editCart')}";
+								$.post(action,{cartid:cartidid,quantity:z_value},function(data){
+									var json = eval("("+data+")");
+									if(json.code == 220 ){
+										window.location.href = "{:U('Login/index',array('key'=>1))}";
+									}
+									if(json.code == 300 ){
+										layer.alert("参数不正确", {icon: 2});
+										return false;
+
+									}else if(json.code == 200){
+
+										countInout.value = z_value;
+										getSubtotal(this);
+
+									}else if(json.code == 210){
+										layer.alert(json.mark, {icon: 2});return false;
+									}
+								})
+
+								getSubtotal(this);
+							}
+							break;
+						case 'delete': //点击了删除
+
+
+							//询问框
+							layer.confirm('您确定删除此商品吗？', {
+								btn: ['确认','取消'] //按钮
+							}, function(){
+								var action = "{:U('Web/ShoppingCar/delProduct')}";
+								$.post(action,{cartid:cartidid},function(data){
+									var json = eval("("+data+")");
+									if(json.code == 200){
+										layer.msg('删除成功');location.reload();
+									}
+									if(json.code == 210){
+										layer.msg(json.mark);
+									}
+
+								})
+							}, function(){
+
+							});
+
+//								if (conf) {
+//									this.parentNode.removeChild(this);
+//								}
+							break;
+					}
+
+					getTotal();
+				}
+				// 给数目输入框绑定keyup事件
+				tr[i].getElementsByTagName('input')[1].onkeyup = function () {
+					var val = parseInt(this.value);
+					if (isNaN(val) || val <= 0) {
+						val = 1;
+					}
+					if (this.value != val) {
+						this.value = val;
+					}
+					getSubtotal(this.parentNode.parentNode); //更新小计
+					getTotal(); //更新总数
+				}
+			}
+
+			// 点击全部删除
+			deleteAll.onclick = function () {
+				if (selectedTotal.innerHTML != 0) {
+					var con = confirm('确定删除所选商品吗？'); //弹出确认框
+					if (con) {
+						for (var i = 0; i < tr.length; i++) {
+							// 如果被选中，就删除相应的行
+							if (tr[i].getElementsByTagName('input')[0].checked) {
+								tr[i].parentNode.removeChild(tr[i]); // 删除相应节点
+								i--; //回退下标位置
+							}
+						}
+					}
+				} else {
+					alert('请选择商品！');
+				}
+				getTotal(); //更新总数
+			}
+
+			// 默认全选
+			checkAllInputs[0].checked = true;
+			checkAllInputs[0].onclick();
+		}
+
+	</script>
+
+	<script>
+		//			function btn(){
+		//				var zcatred = $('#catred').val();
+		//				$.post("{:U('Web/ShoppingCar/cartSettlementBefore')}",{cartid:zcatred},function(data){
+		//				var json = eval("("+data+")");
+		//				if(json.code == 300 ){
+		//					layer.alert("参数不正确", {icon: 2});
+		//				}else if(json.code == 200){
+		//					layer.alert("结算成功",{icon: 3});window.location.href = "{:U('Web/Index/index')}";
+		//				}else{
+		//					layer.alert(json.mark, {icon: 2});
+		//				}
+		//				})
+		//			}
+
+
+
+	</script>

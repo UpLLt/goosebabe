@@ -1,0 +1,108 @@
+<admintpl file="header"/>
+<style>
+    input {
+        padding: 0;
+        margin: 0;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Goods/edit',array('id'=>$product_id))}" target="_self">编辑</a></li>
+        <li class="active"><a href="javascript:;">属性</a></li>
+    </ul>
+
+    <h3>
+        规格
+    </h3>
+
+    <hr>
+    <form id="from_1" action="{:U('Goods/selectoption')}" method="post">
+        <foreach name="attr_option" item="vo">
+            <div>
+                <div>
+                    <h5>{$vo['attr_name']}</h5>
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <notempty name="vo['option']">
+                                <foreach name="vo[option]" item="bo">
+                                    {$bo.option_name}
+                                    <php>
+                                        if(in_array($bo["option_key_id"],$option_data)) {
+                                    </php>
+                                    <input type="checkbox" name="post[{$vo['attr_key_id']}][{$bo['option_key_id']}]"
+                                           value="2" checked/>
+                                    <php>
+                                        }else{
+                                    </php>
+                                    <input type="checkbox" name="post[{$vo['attr_key_id']}][{$bo['option_key_id']}]"
+                                           value="1"/>
+                                    <php>
+                                        }
+                                    </php>
+                                </foreach>
+                            </notempty>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </foreach>
+        <button type="button" id="btn_form_1">下一步</button>
+    </form>
+
+    <div class="row-fluid">
+        <div class="span10">
+
+            <form id="from_2" action="{:U('Goods/updataoption')}" method="post">
+                <table style="margin-top: 10px;word-break:break-all;"
+                       class="table table-hover table-bordered table-list"
+                       id="menus_table_2">
+                    {$product_sku_data.header}
+                    {$product_sku_data.tbody}
+                </table>
+                <input type="hidden" name="product_id" value="{$product_id}">
+                <empty name="product_sku_data">
+                    <div class="hidden">
+                        <button hidden="hidden" id="btn_form_2" type="button">提交</button>
+                    </div>
+                    <else/>
+                    <div>
+                        <button id="btn_form_2" type="button">提交</button>
+                    </div>
+                </empty>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/ajaxForm.js"></script>
+<script>
+    $(function () {
+        $('#btn_form_1').click(function () {
+            $.post('{:U("Goods/selectoption")}', $('#from_1').serialize(), function (e) {
+                $('#menus_table_2').empty();
+                $('#menus_table_2').append(e.header);
+                $('#menus_table_2').append(e.tbody);
+
+                $('#btn_form_2').show();
+            });
+        });
+
+        $('#btn_form_2').click(function () {
+            $.post('{:U("Goods/updataoption")}', $('#from_2').serialize(), function (e) {
+                if (e.info) {
+                    alert(e.msg);
+                } else {
+                    alert(e.msg);
+                }
+            });
+        });
+
+    });
+</script>
+</html>

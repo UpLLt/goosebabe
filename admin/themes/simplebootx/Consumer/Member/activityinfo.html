@@ -1,0 +1,49 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap" style="margin-bottom: 300px">
+    <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+           id="menus-table">
+        <tbody>
+        <tr>
+            <td>真实姓名</td>
+            <td>{$member_data.real_name}</td>
+        </tr>
+        <tr>
+            <td>性别</td>
+            <td>
+                <if condition="($member_data.sex eq 1)">
+                    男
+                    <else/>
+                    女
+                </if>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>正面</td>
+            <td>反面</td>
+        </tr>
+        <tr>
+            <td><img src="{$front.url}"></td>
+            <td><img src="{$back.url}"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <if condition="($member_data['authentication'] eq 1)">
+                    <a class="btn btn-success" href="#">已审核</a>
+                    <else/>
+                    <a class="btn btn-info js-ajax-dialog-btn" href="{:U('Member/authAction',array('id'=>$member_data['id']))}">审核</a>
+                </if>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+	<include file="./application/Web/View/header.html"/>
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+	<style>
+		#bac_cent a{
+			color: #fff;
+			border-radius: 5px;
+			background:#fb821a;
+			width: 100%;
+			display: block;
+		}
+		#wuliuxinx{
+			font-size: 14px !important;;
+			color: #333 !important;
+			border-radius: 2px;
+			background: none !important;
+			padding: 3px 10px;
+			padding: 0px !important;
+			margin: 0px !important;
+			line-height: 40px !important;
+			width: 100% !important;
+			height: 40px !important;
+		}
+		.wuliuxinx{
+			width: 100%;
+			padding: 30px 40px;
+			box-sizing:border-box;
+			float: left;
+		}
+		.wuliuxinx li{
+			width: 100%;
+			float: left;
+			line-height: 40px;
+			height: 40px;
+			color: #333;
+			margin: 0px 0px 10px 0px;
+		}
+		.wuliuxinx li b{
+			width: 80px;
+			float: left;
+			color: #999;
+			font-weight: 300;
+			text-align: left;
+		}
+		.wuliuxinx li a{
+			color: #fb821a;
+			text-decoration: underline;
+		}
+
+	</style>
+
+	<!-- banner -->
+	<div class="main">
+		<div class="cent">
+			<div class="user_center">
+				<div class="user_menu">
+					<h1>个人中心</h1>
+					<li class="action"><a href="{:U('PersonalCenter/orderList',array('key'=>'all'))}">我的订单</a></li>
+					<li ><a href="{:U('PersonalCenter/address_list')}">收货地址</a></li>
+					<li ><a href="{:U('PersonalCenter/password')}">修改密码</a></li>
+					<li ><a href="{:U('PersonalCenter/infomation')}">修改信息</a></li>
+					<img src="__PUBLIC__/Web/images/logo.png" />
+				</div>
+
+				<div class="user_order">
+					<div class="order_menu">
+						{$class}
+					</div>
+
+					<div class="order_h1_dey">
+						<li>商品</li>
+						<li>单价</li>
+						<li>数量</li>
+						<li>实付款</li>
+						<li>订单状态</li>
+						<li>操作</li>
+					</div>
+
+
+					<foreach name="list" item="vo">
+						<div class="order_show">
+							<div class="oder_show_list">
+								<h1><span>{$vo.create_time}</span> <span>订单号：{$vo.order_sn}</span> <span>商品总价：￥{$vo.total_money}</span> </h1>
+							</div>
+							<foreach name="vo.lists" item="va">
+
+
+									<div class="order_show_show_dey">
+									<ul>
+										<li>
+											<div class="order_li_sh">
+												<img style="width: 88px;height: 88px" src="{$va.smeta}" />
+												<h1>{$va.name}</h1>
+												<p>{$va.option_value_name}</p>
+											</div>
+										</li>
+										<li><h2>￥{$va.price}</br><del>￥{$va.original_price}</del></h2></li>
+										<li><b class="bac">{$va.quantity}</b></li>
+										<li><b >￥{$va.total}</b></li>
+										{$vo.string}
+										{$va.url}
+									</ul>
+							</div>
+
+					</foreach>
+						</div>
+					</foreach>
+
+					<div class="lsit_page">
+						{$page}
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+<!-- footer -->
+<include file="./application/Web/View/footer.html"/>
+
+<!-- jquery -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.min.js"></script>
+
+<!-- 弹窗 -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.layer.js"></script>
+
+<script>
+
+</script>
+
+
+<script type="text/javascript">
+	function disNum(dom){
+		dom.nextSibling.nextSibling.innerHTML--;
+		var a = dom.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
+		a--;
+		dom.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = a.toFixed(2);
+		sum();
+	}
+
+
+	function incNum(dom){
+		dom.previousSibling.previousSibling.innerHTML ++;
+		var a = dom.nextSibling.nextSibling.innerHTML;
+		a++;
+		dom.nextSibling.nextSibling.innerHTML = a.toFixed(2);
+		sum();
+	}
+
+	function sum(){
+		var yuans = document.getElementsByName("yuan");
+		var sum = document.getElementById("sum");
+		var s =0;
+		for(var i = 0; i<3;i++){
+		s += Number(yuans[i].innerHTML)
+		}
+		sum.innerHTML = s.toFixed(2);
+	}
+</script>
+
+<script >
+
+	$('#wuliuxinx').on('click', function(){
+
+	});
+
+	function can(ob){
+
+		var zorder_sn = $(ob).attr("class");
+		layer.confirm('是否取消该订单！', {
+			btn: ['确认','取消'] //按钮
+		}, function(){
+
+			$.post("{:U('PersonalCenter/userCancelOrder')}",{order_sn:zorder_sn},function(data){
+				var json = eval("("+data+")");
+				if(json.code == 220 ){
+					layer.msg("您未登陆，请先登录",{icon: 2});window.location.href = "{:U('Login/index',array('key'=>1))}";
+				}
+				if( json.code == 300 ){
+					layer.msg('参数不正确');
+				}
+				if( json.code == 200 ){
+                    layer.msg('已取消！', {icon: 1});location.reload();
+				}
+				if( json.code == 210 ){
+					layer.msg(json.mark);
+                }
+			})
+
+		});
+
+	}
+
+    function sig(ob){
+        var zorder_sn = $(ob).attr("class");
+        layer.confirm('是否确认收货！', {
+            btn: ['确认','取消'] //按钮
+        }, function(){
+
+            $.post("{:U('PersonalCenter/signinOrder')}",{order_sn:zorder_sn},function(data){
+                var json = eval("("+data+")");
+                if( json.code == 300 ){
+                    layer.msg('参数不正确');
+                }
+                if( json.code == 200 ){
+                    layer.msg('已确认收货！', {icon: 1});location.reload();
+                }
+                if( json.code == 210 ){
+                    layer.msg(json.mark);
+                }
+            })
+
+        });
+    }
+
+
+		function logi(ob){
+			var logis = $(ob).attr("class");
+
+			var action = "{:U('PersonalCenter/get_logis')}";
+			$.post(action,{order_id:logis},function(data){
+				layer.open({
+					type: 1,
+					skin: 'layui-layer-rim', //加上边框
+					closeBtn: 0, //不显示关闭按钮
+					shadeClose: true, //开启遮罩关闭
+					area: ['420px', '260px'], //宽高
+					content: '<div class="wuliuxinx">'
+					+'<li><b>快递公司</b>'+data['logistics_company']+'</li>'
+					+'<li><b>快递单号</b>'+data['logistics_number']+'</li>'
+					+'<li><b>快递查询</b><a href="'+data['logistics_url']+'">'+data['logistics_url']+'</a></li>'
+					+'</div>'
+				});
+
+
+			})
+
+
+		}
+
+
+
+
+</script>
+
+

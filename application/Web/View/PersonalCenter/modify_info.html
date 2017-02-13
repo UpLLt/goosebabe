@@ -1,0 +1,289 @@
+<include file="./application/Web/View/header.html"/>
+<style>
+    #bac_cent a{
+        color: #fff;
+        border-radius: 5px;
+        background:#fb821a;
+        width: 100%;
+        display: block;
+    }
+    b red{
+        color: #ff0000;
+        margin: 0px 5px 0px 0px;
+        line-height:40px;
+    }
+</style>
+    <!-- g公共部分 -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+    <!-- 字体图片 -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+	<!-- banner -->
+	<div class="main">
+		<div class="cent">
+			<div class="user_center">
+				<div class="user_menu">
+					<h1>个人中心</h1>
+                    <li><a href="{:U('PersonalCenter/orderList',array('key'=>'all'))}">我的订单</a></li>
+                    <li ><a href="{:U('PersonalCenter/address_list')}">收货地址</a></li>
+                    <li ><a href="{:U('PersonalCenter/password')}">修改密码</a></li>
+                    <li class="action"><a href="{:U('PersonalCenter/infomation')}">修改信息</a></li>
+					<img src="__PUBLIC__/Web/images/logo.png" />
+				</div>
+
+				<div class="user_get">
+					<div class="address_show shops">
+						<h1>修改个人资料</h1>
+						<img src="__PUBLIC__/Web/images/shadow.png" />
+					</div>
+
+					<div class="user_get_show">
+						<form action="{:U('PersonalCenter/madify_info')}"  enctype="multipart/form-data" method="post" >
+
+							<li><b><red>*</red>昵称：</b><input name="nickname" type="text" placeholder="昵称" value="{$member.nickname}" /></li>
+							<li><b><red>*</red>姓名：</b><input type="text" name="real_name" placeholder="姓名" value="{$member.real_name}" /></li>
+
+							<li class="radio_sex">
+								<b><red>*</red>性别：</b>
+
+
+
+                                <if condition="$member.sex eq 1 ">
+                                    <div><input type="radio" name="sex" checked  value="1">男</div>
+                                    <div><input type="radio" name="sex"  value="2">女</div>
+                                <elseif condition="$member.sex  eq 2  " />
+                                    <div><input type="radio" name="sex"   value="1">男</div>
+                                    <div><input type="radio" name="sex" checked value="2">女</div>
+
+                                 <else />
+                                     <div><input type="radio" name="sex"   value="1">男</div>
+                                     <div><input type="radio" name="sex"   value="2">女</div>
+
+                                </if>
+
+							</li>
+							<li class="card_tex"><b><red>*</red>身份证号：</b><input value="{$member.identity_card}" type="text" name="identity_card" placeholder="请输入身份证号码" maxlength="18" /></li>
+							<li><b><red>*</red>身份证照：</b>
+								<li class="identity">
+									<p><span>上传收件人已身份证名字一致的证件照片，</span>
+										有利于清关时免税，上传照片需清晰看见证件号码及名字，照片仅供Goosebabe商家清关使用，不作他图使用，其他任何人均无法查看。
+									</p>
+
+
+
+									<div class="identity_left">
+										<div id="preview">
+										    <img id="imghead" width=100% height=auto border=0 src='{$member.front}'>
+										</div>
+
+											<a href="javascript:;" id="front" class="a-upload" style="">
+											    <input type="file" name="front"   onchange="previewImage(this)">上传正面照
+                 					</a>
+
+										<h1>清晰正面照</h1>
+										<h5>证件仅供Goosebade直邮使用</h5>
+									</div>
+									
+									<div class="identity_left">
+										<div id="previews">
+										    <img id="imgheads" width=100% height=auto border=0 src='{$member.back}'>
+										</div>
+
+										<a href="javascript:;" id="back" class="a-upload" style="">
+										    <input type="file" name="back"   onchange="previewImages(this)">上传反面照
+										</a>
+										<h1>清晰反面照</h1>
+										<h5>证件仅供Goosebade直邮使用</h5>
+									</div>
+
+                            </li>
+
+							<li class="submit_mit"  id="submit_mit"><b>&nbsp;</b><input type="submit"  value="保 存"/></li>
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+<!-- footer -->
+<include file="./application/Web/View/footer.html"/>
+
+<!-- jquery -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.min.js"></script>
+
+<!-- layer -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/layer.js"></script>
+
+<!-- 时间 -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jedate.min.js"></script>
+
+<script type="text/javascript">
+   
+    jeDate({
+		dateCell:"#dateinfo",
+		format:"YYYY年MM月DD日",
+		isinitVal:true,
+		isTime:true, //isClear:false,
+		minDate:"1916-06-16",
+		okfun:function(val){alert(val)}
+	})
+
+    //alert("YYYY/MM".match(/\w+|d+/g).join("-"))
+</script>
+
+<script>
+
+
+
+
+
+//    function btn(){
+//
+//        $.post('{:U("PersonalCenter/madify_info")}', $('#form').serialize(),function(data){
+//            var json = eval("("+data+")");
+//            if(json.code == 300 ){
+//                layer.msg("请补全表单");
+//            }else if(json.code == 200){
+//                layer.msg("修改成功");window.location.href = "{:U('Web/PersonalCenter/infomation')}";
+//            }else{
+//                layer.msg(json.mark );
+//            }
+//        })
+//    }
+
+</script>
+<script>
+
+//    $(function(){
+//        var authentication = $('#authentication').val();
+//        if( authentication == 1 ){
+//            $('#submit_mit').hide();
+//            $('#back').attr('style','display:none;');
+//            $('#front').attr('style','display:none;');
+//        }
+//
+//    })
+</script>
+
+
+<script type="text/javascript">
+      //图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+          var MAXWIDTH  = 260; 
+          var MAXHEIGHT = 180;
+          var div = document.getElementById('preview');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imghead>';
+              var img = document.getElementById('imghead');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.width  =  rect.width;
+                img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imghead>';
+            var img = document.getElementById('imghead');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight )
+            {
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                 
+                if( rateWidth > rateHeight )
+                {
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else
+                {
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+</script>
+ 
+<script type="text/javascript">
+      //图片上传预览    IE是用了滤镜。
+        function previewImages(file)
+        {
+          var MAXWIDTH  = 260; 
+          var MAXHEIGHT = 180;
+          var div = document.getElementById('previews');
+          if (file.files && file.files[0])
+          {
+              div.innerHTML ='<img id=imgheads>';
+              var img = document.getElementById('imgheads');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.width  =  rect.width;
+                img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            div.innerHTML = '<img id=imgheads>';
+            var img = document.getElementById('imgheads');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight )
+            {
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                 
+                if( rateWidth > rateHeight )
+                {
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else
+                {
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+</script>  

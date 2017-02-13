@@ -1,0 +1,55 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Category/lists')}" target="_self">分类列表</a></li>
+        <li class="active"><a href="javascript:;">新增分类</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form" action="{:U('Category/add_post')}" method="post">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">父级分类</label>
+                    <div class="controls">
+                        <select name="parentid">
+                            <option value="0">一级父类</option>
+                            {$category_tree}
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">分类名称</label>
+                    <div class="controls">
+                        <input type="text" name="name" value="">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">图标</label>
+                    <div class="controls">
+                        <div style="text-align: left;">
+                            <input type="hidden" name="images" id="thumb" value="">
+                            <a href="javascript:void(0);"
+                               onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                                <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb_preview"
+                                     width="135" style="cursor: hand;background-color: #00a0e9"/>
+                            </a>
+                            <input type="button" class="btn btn-small"
+                                   onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                   value="取消图片">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+            <a class="btn" href="{:U('Category/lists')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('About/index')}" target="_self">说明文案配置</a></li>
+        <li class="active"><a href="javascript:;">Doc类型</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('About/index')}">
+        名称：
+        <input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="请输入名称...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <div>
+        <a class="btn btn-primary" href="{:U('About/docadd')}">新增</a>
+    </div>
+
+    <table style="margin-top: 10px;" class="table table-hover table-bordered table-list" id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>名称</th>
+            <th>KEY</th>
+            <th>创建时间</th>
+            <th>修改时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {$categorys}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

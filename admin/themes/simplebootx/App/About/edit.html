@@ -1,0 +1,83 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('About/index')}" target="_self">说明文案配置</a></li>
+        <li><a href="{:U('About/docadd')}" target="_self">新增Doc类型</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form action="{:U('About/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">名称</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="name" required value="{$data.name}"
+                                   placeholder="请输入名称"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="80">KEY</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="doc_class" required value="{$data.doc_class}"
+                                   placeholder="请输入KEY"/>
+                            <span class="form-required">仅配置为KEY说明中的访问有效*</span>
+                            <div style="margin: 6px;">
+                                <div>
+                                    <strong>KEY说明:</strong>
+                                </div>
+                                <table style="width: 100%" class="table table-bordered">
+                                    {$doclist}
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>描述信息</th>
+                        <td>
+                            <textarea name="desc" id="desc" required style="width: 98%; height: 50px;"
+                                      placeholder="请填写描述信息">{$data.desc}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td>
+                            <script type="text/plain" id="content" name="content"
+                                    style="width:80%x;height:500px;">{$data.content}
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="id" value="{$data.id}">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">修改</button>
+            <a class="btn" href="{:U('About/index')}">返回</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        /////---------------------
+        <!-- 实例化编辑器 -->
+        var ue = UE.getEditor('content', {
+            autoHeight: false,
+            autoHeightEnabled: false, //出现滚动条
+            elementPathEnabled: false  //去掉元素路径
+
+        });
+    });
+</script>
+</body>
+</html>

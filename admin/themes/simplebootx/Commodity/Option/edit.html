@@ -1,0 +1,42 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Option/lists')}" target="_self">属性</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form" action="{:U('Option/edit_post')}" method="post">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">规格</label>
+                    <div class="controls">
+                        <select name="attr_key_id">
+                            {$options}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">属性名称</label>
+                    <div class="controls">
+                        <input type="text" name="option_name" value="{$data.option_name}">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="option_key_id" value="{$data.option_key_id}">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+            <a class="btn" href="{:U('Option/lists')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

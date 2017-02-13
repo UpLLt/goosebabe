@@ -1,0 +1,108 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Index/billboard')}" target="_self">横幅广告</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Index/edit_post')}" method="post"
+          enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="control-group">
+                    <label class="control-label">横幅广告名称</label>
+                    <div class="controls">
+                        <input type="text" name="post[name]" value="{$data.name}">
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">横幅广告类型</label>
+                    <div class="controls">
+                        <select name="post['type']">
+                            <if condition="($data.type eq 0)">
+                                <option selected="selected" value="0">App</option>
+                                <option value="1">PC</option>
+                                <else/>
+                                <option value="0">App</option>
+                                <option selected="selected" value="1">PC</option>
+                            </if>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">状态</label>
+                    <div class="controls">
+                        <select name="post[status]">
+                            <if condition="($data.status eq 1)">
+                                <option selected="selected" value="1">启用</option>
+                                <option value="0">禁用</option>
+                                <else/>
+                                <option value="1">启用</option>
+                                <option selected="selected" value="0">禁用</option>
+                            </if>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+                   id="menus-table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Link</th>
+                    <th>图片</th>
+                    <th>排序</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="trlist">
+                {$categorys}
+                </tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a id="add_upload_tr" class="btn btn-info">新增</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="id" value="{$data.id}">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+            <a class="btn" href="{:U('Index/lists')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script>
+    $(function () {
+        $('#add_upload_tr').click(function (e) {
+            $('#trlist').append('<tr>' +
+                    '<td><input required name="title[]" value=""></td>' +
+                    '<td><input name="link[]" value=""></td>' +
+                    '<td><input type="file" name="image[]"></td>' +
+                    '<td><input name="sort_order[]" value=""></td>' +
+                    '<td><a class="btn btn-danger btn-small" href="javascript:;" onclick="deletetr(this)"><span>删除</span></a></td>' +
+                    '</tr>');
+        });
+    });
+
+    function deletetr(e) {
+        $(e).parent().parent().remove();
+    }
+</script>
+</body>
+</html>

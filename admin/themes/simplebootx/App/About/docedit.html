@@ -1,0 +1,45 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('About/index')}" target="_self">说明文案配置</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form action="{:U('About/docedit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">KEY</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="key_name" required value="{$data.key_name}"
+                                   placeholder="请输入key"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="80">说明</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="key_desc" required value="{$data.key_desc}"
+                                   placeholder="请输入说明"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="id" value="{$data.id}">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+            <a class="btn" href="{:U('About/doclist')}">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

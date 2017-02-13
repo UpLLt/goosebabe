@@ -1,0 +1,80 @@
+	<include file="./application/Web/View/header.html"/>
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+	<style>
+		#bac_index a{
+			color: #fff;
+			border-radius: 5px;
+			background:#fb821a;
+			width: 100%;
+			display: block;
+		}
+	</style>
+	<div class="main">
+		<div class="cent">
+			<div class="help_h1">
+				<h1>Hi~ ,欢迎您来到帮助中心</h1>
+			</div>
+			<div class="help_menu">
+				<ul id="accordion" class="accordion">
+					<li>
+						<div class="link"><i class="fa fa-map-signs" ></i>购物指南<i class="fa fa-chevron-down"></i></div>
+						<ul class="submenu">
+							<li><a href="{:U('Web/Help/index',array('type'=>1))}">购物流程</a></li>
+							<li><a href="{:U('Web/Help/index',array('type'=>2))}">常见问题</a></li>
+						</ul>
+					</li>
+					<li><div class="link"><i class="fa fa-globe"></i>在线支付<i class="fa fa-chevron-down"></i></div>
+						<ul class="submenu">
+							<li><a href="{:U('Web/Help/index',array('type'=>3))}">在线支付</a></li>
+						</ul>
+					</li>
+					<li>
+						<div class="link"><i class="fa fa-truck"></i>售后服务<i class="fa fa-chevron-down"></i></div>
+						<ul class="submenu">
+							<li><a href="{:U('Web/Help/index',array('type'=>4))}">运费及时效</a></li>
+
+						</ul>
+					</li>
+					<li><div class="link"><i class="fa fa-heart" ></i>联系我们<i class="fa fa-chevron-down"></i></div>
+						<ul class="submenu">
+							<li><a href="{:U('Web/Help/index',array('type'=>5))}">联系客服</a></li>
+
+
+						</ul>
+					</li>
+					<li><div class="link"><i class="fa fa-globe"></i>关于我们<i class="fa fa-chevron-down"></i></div>
+						<ul class="submenu">
+							<li><a href="{:U('Web/Help/index',array('type'=>6))}">关于我们</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+			<div class="help_show">
+				<div class="help_show_top">
+					<h1><span>{$list.title}</span></h1>
+				</div>
+
+			{$list.content}
+			</div>
+
+
+	</div>
+
+
+
+<!-- footer -->
+<include file="./application/Web/View/footer.html"/>
+
+<!-- jquery -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery-1.9.1.min.js"></script>
+
+<!-- help_menu -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/help_menu.js"></script>

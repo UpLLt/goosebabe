@@ -1,0 +1,32 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">客服电话</a></li>
+    </ul>
+    <form action="{:U('ServiceCenter/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">客服电话</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="options[app_service_phone]" required
+                                   value="{$data.app_service_phone}"
+                                   placeholder=""/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

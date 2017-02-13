@@ -1,0 +1,209 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Appset/index')}" target="_self">轮播图</a></li>
+        <li><a href="{:U('Appset/advertisement')}" target="_self">广告</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+
+    <form action="{:U('Appset/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="white-space:nowrap;">名称：</th>
+                        <td><input type="text" name="name" required value="{$data.name}" style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="white-space:nowrap;">所属版面</th>
+                        <td>
+                            <select name="pages">
+                                <option value="0">-默认-</option>
+                                {$optionsPage}
+                            </select>
+                            <span>
+                                &nbsp;
+                                   <a class="btn btn-info btn-small" id="addpeople"
+                                      data-toggle="modal"
+                                      data-target="#myModal">新增版面</a>
+                                &nbsp;
+                                    <a class="btn btn-primary btn-small"
+                                       href="javascript:open_iframe_dialog('{:U('Appset/pagelists')}','版面管理')">版面管理</a>
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">类型</th>
+                        <td>
+                            <select name="type">
+                                <option value="1">轮播</option>
+                                <option value="2">广告</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="white-space:nowrap;">城市</th>
+                        <td>
+                            <select name="city">
+                                {$options}
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">描述：</th>
+                        <td><input type="text" name="describe" value="{$data.describe}" style="width: 400px">
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">图片：</th>
+                        <td>
+                            <input type="hidden" name="images" id="thumb" value="{$data.images}">
+                            <a href="javascript:void(0);"
+                               onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                                <img src="{$data.images|default='__TMPL__Public/assets/images/default-thumbnail.png'}"
+                                     id="thumb_preview"
+                                     width="135" style="cursor: hand"/>
+                            </a>
+                            <input type="button" class="btn btn-small"
+                                   onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                   value="取消图片">
+                            <span>*考虑到APP使用移动网络加载图片的问题，图片大小控制在1M以内为最优配置</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">活动开始时间：</th>
+                        <td>
+                            <input type="text" name="start_time" value="{$data.start_time|date='Y-m-d H:i',###}"
+                                   class="js-date-min-yesterday" style="width: 160px;">
+                            <span class="form-required">不参与抽奖可以不填</span>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th style="white-space:nowrap;">活动结束时间：</th>
+                        <td>
+                            <input type="text" name="end_time" value="{$data.end_time|date='Y-m-d H:i',###}"
+                                   class="js-date-min-today" style="width: 160px;">
+                            <span class="form-required">不参与抽奖可以不填</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>奖金：</th>
+                        <td><input type="number" name="bonus" value="{$data.bonus}" style="width: 400px">
+                            <span class="form-required"> 不参与抽奖可以不填 </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>奖品份数：</th>
+                        <td><input type="number" name="parts" value="{$data.parts}" style="width: 400px">
+                            <span class="form-required">不参与抽奖可以不填 </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">是否显示：</th>
+                        <td>
+                            <if condition="($data.isshow eq 1)">
+                                <label class="radio"><input type="radio" name="isshow" value="1" checked>显示</label>
+                                <label class="radio"><input type="radio" name="isshow" value="0">隐藏</label>
+                                <else/>
+                                <label class="radio"><input type="radio" name="isshow" value="1">显示</label>
+                                <label class="radio"><input type="radio" name="isshow" value="0" checked>隐藏</label>
+                            </if>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th style="white-space:nowrap;">设置奖励：</th>
+                        <td>
+                            <if condition="($data.isdraw eq 0)">
+                                <label class="radio"><input type="radio" name="isdraw" value="0" checked>不参与</label>
+                                <label class="radio"><input type="radio" name="isdraw" value="1">参与</label>
+                                <else/>
+                                <label class="radio"><input type="radio" name="isdraw" value="0">不参与</label>
+                                <label class="radio"><input type="radio" name="isdraw" value="1" checked>参与</label>
+                            </if>
+                            <span class="form-required text-info">不提供奖励则以下关于奖励的设置均无效</span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <th>内容</th>
+                        <td>
+                            <script type="text/plain" id="content" name="content" style="width:80%x;height:500px;">{$data.content}</script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="id" value="{$data.id}">
+        </div>
+        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        <a class="btn" href="{:U('Appset/index')}">返回</a>
+    </form>
+</div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">新增版面</h3>
+    </div>
+    <form action="{:U('Appset/pageadd_post')}" method="post"
+          class="form-horizontal js-ajax-form">
+        <div class="modal-body">
+            <table>
+                <tbody>
+                <tr>
+                    <td>版面名称：</td>
+                    <td><input type="text" name="pname" value=""><span>&nbsp;*</span></td>
+                </tr>
+                <tr>
+                    <td>版面标识：</td>
+                    <td><input type="text" name="sign" value=""><span>&nbsp;*</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="hidden">
+            <input type="hidden" name="wid" value="{$id}">
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <button type="submit" class="btn btn-primary js-ajax-submit">新增</button>
+        </div>
+    </form>
+</div>
+
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+</body>
+<script type="text/javascript">
+    $(function () {
+        /////---------------------
+        <!-- 实例化编辑器 -->
+        var ue = UE.getEditor('content', {
+            autoHeight: false,
+            autoHeightEnabled: false, //出现滚动条
+            elementPathEnabled: false  //去掉元素路径
+
+        });
+    });
+</script>
+</html>

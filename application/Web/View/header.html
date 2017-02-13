@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>母婴电商</title>
+</head>
+<body>
+
+<div class="top">
+    <div class="head">
+        <div class="cent">
+            <div class="usercenter">
+                {$login}
+                <li><p><a href="{:U('Web/Help/index')}">帮助中心</a></p></li>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="cent">
+            <div class="logo"><img src="__PUBLIC__/Web/images/logo.png" /></div>
+            <div class="menu">
+                <li id="bac_index"><a href="{:U('Index/index')}">首页</a></li>
+                <li id="bac_shop"><a href="{:U('ShoppingCar/index')}">购物车</a></li>
+                <li id="bac_cent"><a href="{:U('PersonalCenter/index')}">个人中心</a></li>
+                <li id="bac_gua"><a href="{:U('Guarantee/index')}">正品保障</a></li>
+            </div>
+            <div class="search">
+                <form method="post" action="{:U('Search/all_search')}">
+
+                    <input type="text" class="search_in" name="key" placeholder="婴儿推车" />
+                    <input type="submit"  class="search_bt" value="搜索" />
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

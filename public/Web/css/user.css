@@ -1,0 +1,357 @@
+
+body{
+	margin: 0px; 
+	padding: 0px; 
+	font-size: 14px;
+	font-family:'Microsoft Yahei';
+}
+h1,h2,h3,h4,h5,h6,p,ul{
+	margin: 0px; padding: 0px; 
+}
+li{
+	list-style: none;
+}
+input{
+	font-family:'Microsoft Yahei';
+}
+input:focus{
+	outline: none;
+}
+.img{
+	border:none;
+}
+a{
+	text-decoration: none;
+}
+.cent{
+	width: 1100px;
+	margin: 0px auto;
+	height: auto;
+	display: block;
+	overflow: hidden;
+}
+.user_head{
+	width: 100%;
+	height: 120px;
+	padding: 10px 0px;
+	float: left;
+}
+.user_head .user_logo{
+	width: 300px;
+	float: left;
+}
+.user_logo img{
+	width: 100%;
+}
+.login{
+	width: 100%;
+	float: left;
+	height: auto;
+	display: block;
+	overflow: hidden;
+	position: relative;
+	margin: 0px 0px 20px;
+	z-index: 1;
+}
+.login_more{
+	width: 600px;
+	float: left;
+	position: relative;
+}
+.login_more img{
+	width: 100%;
+	float: left;
+	position: absolute;
+	top: 50px;
+	left: -70px;
+}
+.user_login{
+	width: 420px;
+	float: right;
+	padding: 20px;
+	margin: 2px 50px 10px;
+	box-sizing:border-box;
+	box-shadow: 1px 1px 10px rgba(173,171,171,0.2);
+}
+.user_login h1{
+	font-size: 34px;
+	color: #fa8318;
+	padding: 20px 0px 20px;
+	font-weight: 300;
+	letter-spacing: 1px;
+	float: left;
+	width: 100%;
+}
+.user_login form{
+	width: 100%;
+	height:auto;
+	display:block;
+	overflow: hidden;
+	float: left;
+}
+.user_login form li{
+	width: 384px;
+	height: 55px;
+	background: url(../images/user_li_bg.png) no-repeat ;
+	background-size: 100%;
+	float: left;
+	margin: 0px 0px 15px 0px;
+}
+.user_login form li b{
+	width:40px;
+	height: 40px;
+	float: left;
+}
+.user_login form li b img{
+	width: 100%;
+}
+.user_login form li input{
+	width: 260px;
+	height: 30px;
+	padding: 0px 5px;
+	float: left;
+	margin: 7px 0px 0px;
+	border:none;
+	font-size: 14px;
+}
+.user_code{
+	width: 100%;
+	float: left;
+	margin: 0px 0px 20px;
+}
+.user_code img{
+	width: 120px;
+	height: 40px;
+	margin: 0px 0px 0px 35px;
+}
+.user_code input{
+	border:1px solid #ccc;
+	width: 120px;
+	height: 40px;
+	padding: 0px 10px;
+	float: left;
+}
+.user_code a{
+	width: 200px;
+	float: right;
+	height: 40px;
+	border:1px solid #ccc;
+	line-height: 40px;
+	text-align: center;
+	font-size: 16px;
+	color: #fb821a;
+}
+.user_code b{
+	width: 200px;
+	float: right;
+	height: 40px;
+	border:1px solid #ccc;
+	line-height: 40px;
+	text-align: center;
+	font-size: 16px;
+	color: #fb821a;
+	display: none;
+	font-weight: 300;
+}
+.user_sumbt{
+	width: 100%;
+	float: left;
+	height: 40px;
+	margin: 0px 0px 20px 0px;
+}
+.user_sumbt input{
+	width: 100%;
+	height: 40px;
+	border:none;
+	font-size: 16px;
+	color: #fff;
+	background: #fb821a;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.user_more{
+	width: 100%;
+	margin: 0px 0px 20px 0px;
+	float: left;
+}
+.user_more a{
+	float: right;
+	margin: 0px 0px 0px 40px;
+	color: #666;
+	font-size: 14px;
+}
+.footer{
+	width: 100%;
+	margin: 50px 0px ;
+	float: left;
+}
+.footer p{
+	text-align: center;
+	color: #999;
+}
+
+
+/*忘记密码 */
+.forget{
+	height: auto;
+	display: block;
+	overflow: hidden;
+	width: 100%;
+	box-sizing:border-box;
+	float: left;
+}
+.forget form{
+	width: 100%;
+	height: auto;
+	padding: 70px 300px;
+	box-sizing:border-box;
+	border:1px solid #e1e1e1;
+	margin: 30px 0px 0px;
+	float: left;
+}
+.forget form li {
+	width: 100%;
+	float: left;
+	line-height: 40px;
+	margin: 0px 0px 15px 0px;
+}
+.forget form li span{
+	color: #fb821a;
+	font-size: 18px;
+}
+.forget form b{
+	float: left;
+	width: 120px;
+	line-height: 40px;
+	font-size: 14px;
+	font-weight: 300;
+	text-align: right;
+	color: #666;
+	margin: 0px 10px 0px 0px;
+}
+.forget form li input{
+	width: 298px;
+	height: 40px;
+	background: url(../images/user_li_bg.png) no-repeat ;
+	background-size: 100%;
+	line-height: 40px;
+	float: left;
+	border:none;
+	padding: 0px 10px  5px;	
+}
+.forget_code{
+	width: 100%;
+	float: left;
+	margin: 0px 0px 15px 0px;
+	line-height: 40px;
+}
+.forget_code input{
+	width: 170px;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	padding: 0px 5px;
+	border:1px solid #e1e1e1;
+}
+.forget_code img{
+	width: 120px;
+	height: 35px;
+	float: left; 
+	margin: 2px 0px 0px 10px;
+}
+.forget_sub{
+	width: 100%;
+	float: left;
+	margin: 0px 0px 15px 0px;
+	line-height: 40px;
+}
+.forget_sub input{
+	width: 40%;
+	height: 40px;
+	border-radius: 3px;
+	border:none;
+	margin: 30px 0px 0px;
+	font-size: 16px;
+	color: #fff;
+	background: #fb821a;
+	cursor: pointer;
+}
+.forget form p{
+	font-size: 14px;
+	color: #999;
+	font-weight: 300;
+	margin: 40px 0px 0px;
+	float: left;
+}
+.forget_a_code{
+	margin: 0px 0px 30px 0px;
+	width: 100%;
+	float: left;
+}
+.forget_a_code b{
+	float: left;
+	width: 120px;
+	line-height: 35px;
+	font-size: 14px;
+	font-weight: 300;
+	text-align: right;
+	color: #666;
+	margin: 0px 10px 0px 0px; 
+}
+.forget_a_code input{
+	border:1px solid #ccc;
+	width: 120px;
+	height: 35px;
+	margin: 2px 0px 0px;
+	padding: 0px 10px;
+	float: left;
+}
+.forget_a_code img{
+	width: 120px;
+	height: 35px;
+	float: left; 
+	margin: 2px 0px 0px 10px;
+}
+.forget_a_code a{
+	width: 160px;
+	float: left;
+	height: 35px;
+	border:1px solid #ccc;
+	line-height: 35px;
+	text-align: center;
+	font-size: 16px;
+	color: #fb821a;
+	margin: 2px 0px 0px 10px;
+}
+.forget_a_code span{
+	width: 160px;
+	float: left;
+	height: 35px;
+	border:1px solid #ccc;
+	line-height: 35px;
+	text-align: center;
+	font-size: 16px;
+	color: #fb821a;
+	display: none;
+	font-weight: 300;
+	margin: 2px 0px 0px 10px;
+}
+.forget_c{
+	margin: 0px 0px 30px 0px;
+	width: 100%;
+	float: left;
+}
+.forget_c p{
+	width: 100%;
+	text-align: center !important;
+}
+.forget_c p a{
+	color: #fb821a;
+	margin: 0px 10px;
+}
+
+
+/* 屏幕适配 */
+@media (min-width:320px) {
+	
+}

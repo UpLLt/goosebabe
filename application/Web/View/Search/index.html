@@ -1,0 +1,778 @@
+<include file="./application/Web/View/header.html"/>
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+
+	<!-- jquery -->
+	<script type="text/javascript" src="__PUBLIC__/Web/js/jquery-1.4.1.min.js"></script>
+
+
+
+	<!-- banner -->
+	<div class="main">
+		<div class="cent">
+			<div class="postion_menu">
+				<h1><a href="{:U('Index/index')}">首页</a>><span>{$cate_name}</span></h1>
+			</div>
+			<div class="screen">
+				<ul class="select">
+
+					<li class="select-list">
+						<dl id="classify1">
+							<dt>分类</dt>
+
+								{$son_str}
+						</dl>
+					</li>
+
+					<li class="select-list">
+						<dl id="brand1">
+							{$brand_str}
+						</dl>
+					</li>
+
+
+
+
+					<li class="select-result">
+						<dl>
+							<dt>已选条件：</dt>
+							<!--<dd onclick="sear()" class="selected" id="onesda"><a href="javascript:void(0);">点击搜索</a></dd>-->
+							<dd class="select-no">暂时没有选择过滤条件</dd>
+
+
+							<input type="hidden" id="option_path">
+						</dl>
+					</li>
+
+
+				</ul>
+			</div>
+
+			<div class="bread_filter">
+				<h1>
+					<a href="javascript:void(0);" onclick="new_id()" id="id" class="hocer">新品</a>
+					<a href="javascript:void(0);" onclick="sale()"   id="sales_volume">销量</a>
+					<a href="javascript:void(0);" onclick="price()"  id="price">价格</a>
+					<span>共计<b id="count">{$count}</b>件商品</span>
+				</h1>
+			</div>
+
+			<input type="hidden" value="{$category}" id="category">
+
+			<div class="bread_list_li" id="bread">
+				{$bread_list}
+			</div>
+
+			<div class="lsit_page" id="lsit_page">
+				{$page}
+			</div>
+		</div>
+
+<!-- footer -->
+<include file="./application/Web/View/footer.html"/>
+
+<script>
+
+
+	function page(ob){
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+		var zpage = $(ob).attr('name');
+
+		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify,page:zpage},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+		});
+
+
+	}
+
+	function new_id(){
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+		var zorder = "id";
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+
+		$.post(action,{order:zorder,option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+				$('#bread').empty();
+//				$('#brand_sel').html(json.datas.brand_str);
+				$('#bread').html(json.datas.bread_list);
+				$('#count').html(json.datas.count);
+				$('#lsit_page').html(json.datas.page);
+				$('#id').attr('class','hocer');
+				$('#sales_volume').attr('class','');
+				$('#price').attr('class','');
+		});
+
+	}
+
+	function sale(){
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zorder = "sales_volume";
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+		$.post(action,{order:zorder,option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+			$('#id').attr('class','');
+			$('#sales_volume').attr('class','hocer');
+			$('#price').attr('class','');
+		});
+	}
+
+	function price(){
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zorder = "price";
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+		$.post(action,{order:zorder,option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+			$('#id').attr('class','');
+			$('#sales_volume').attr('class','');
+			$('#price').attr('class','hocer');
+
+		});
+	}
+
+//	function sear(){
+//
+//
+//		var e = '';
+//		$("input[name = option_path]").each(function(){
+//			if(e.length == 0 ){
+//				e += $(this).val();
+//			}else{
+//				e += ','+$(this).val();
+//			}
+//		})
+//
+//		var zoption_path = e;
+//		var action = "{:U('Web/Search/ajax_search')}";
+//		var zcategory = $('#category').val();
+//		var zbrand = $('#brand').val();
+//		var zclassify = $('#classify').val();
+//
+//
+//		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+//			var json = eval("("+data+")");
+//			$('#lsit_page').empty();
+//			$('#bread').empty();
+//			$('#bread').html(json.datas.bread_list);
+//			$('#count').html(json.datas.count);
+//			$('#lsit_page').html(json.datas.page);
+//		});
+//
+//	}
+
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+
+		$("#brand1 dd").click(function () {
+
+
+			$(this).addClass("selected").siblings().removeClass("selected");
+
+			var option = $(this).attr('option');
+			var html = "<input type='hidden' name='brand' id='brand' value='"+option+"'>";
+
+			if ($(this).hasClass("select-all")) {
+				$("#brandA").remove();
+				$("#brand").remove();
+			} else {
+				var copyThisA = $(this).clone();
+
+				if ($("#brandA").length > 0) {
+
+					$("#brandA a").html($(this).text());
+
+					$("#brand").val(option);
+				} else {
+
+					$(".select-result dl").append(html);
+					$(".select-result dl").append(copyThisA.attr("id", "brandA"));
+
+				}
+			}
+
+			var e = '';
+			$("input[name = option_path]").each(function(){
+				if(e.length == 0 ){
+					e += $(this).val();
+				}else{
+					e += ','+$(this).val();
+				}
+			})
+
+			var zoption_path = e;
+			var action = "{:U('Web/Search/ajax_search')}";
+			var zcategory = $('#category').val();
+			var zbrand = $('#brand').val();
+			var zclassify = $('#classify').val();
+
+
+			$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+				var json = eval("("+data+")");
+				$('#lsit_page').empty();
+				$('#bread').empty();
+				$('#bread').html(json.datas.bread_list);
+				$('#count').html(json.datas.count);
+				$('#lsit_page').html(json.datas.page);
+			});
+
+
+		});
+
+		$("#classify1 dd").click(function () {
+
+
+			$(this).addClass("selected").siblings().removeClass("selected");
+
+			var option = $(this).attr('option');
+			var html = "<input type='hidden' name='classify' id='classify' value='"+option+"'>";
+
+			if ($(this).hasClass("select-all")) {
+				$("#classifyA").remove();
+				$("#classify").remove();
+
+
+			} else {
+				var copyThisA = $(this).clone();
+
+				if ($("#classifyA").length > 0) {
+
+					$("#classifyA a").html($(this).text());
+
+					$("#classify").val(option);
+				} else {
+
+					$(".select-result dl").append(html);
+					$(".select-result dl").append(copyThisA.attr("id", "classifyA"));
+
+				}
+			}
+
+
+			var e = '';
+			$("input[name = option_path]").each(function(){
+				if(e.length == 0 ){
+					e += $(this).val();
+				}else{
+					e += ','+$(this).val();
+				}
+			})
+
+			var zoption_path = e;
+			var action = "{:U('Web/Search/ajax_search')}";
+			var zcategory = $('#category').val();
+			var zbrand = $('#brand').val();
+
+			var zclassify = $('#classify').val();
+
+
+
+			$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+				var json = eval("("+data+")");
+				$('#lsit_page').empty();
+				$('#bread').empty();
+				$('#brand_sel').html(json.datas.brand_str);
+				$('#bread').html(json.datas.bread_list);
+				$('#count').html(json.datas.count);
+				$('#lsit_page').html(json.datas.page);
+				$('#brand1').html(json.datas.brand_str);
+				$("#brandA").remove();
+				$("#brand").remove();
+				$("#brand1 dd").click(function () {
+
+
+					$(this).addClass("selected").siblings().removeClass("selected");
+
+					var option = $(this).attr('option');
+					var html = "<input type='hidden' name='brand' id='brand' value='"+option+"'>";
+
+					if ($(this).hasClass("select-all")) {
+						$("#brandA").remove();
+						$("#brand").remove();
+					} else {
+						var copyThisA = $(this).clone();
+
+						if ($("#brandA").length > 0) {
+
+							$("#brandA a").html($(this).text());
+
+							$("#brand").val(option);
+						} else {
+
+							$(".select-result dl").append(html);
+							$(".select-result dl").append(copyThisA.attr("id", "brandA"));
+
+						}
+					}
+
+					var e = '';
+					$("input[name = option_path]").each(function(){
+						if(e.length == 0 ){
+							e += $(this).val();
+						}else{
+							e += ','+$(this).val();
+						}
+					})
+
+					var zoption_path = e;
+					var action = "{:U('Web/Search/ajax_search')}";
+					var zcategory = $('#category').val();
+					var zbrand = $('#brand').val();
+					var zclassify = $('#classify').val();
+
+
+					$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+						var json = eval("("+data+")");
+						$('#lsit_page').empty();
+						$('#bread').empty();
+						$('#bread').html(json.datas.bread_list);
+						$('#count').html(json.datas.count);
+						$('#lsit_page').html(json.datas.page);
+					});
+
+
+				});
+			});
+
+		});
+
+
+		$("#select1 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+
+		var option = $(this).attr('option');
+		var html = "<input type='hidden' name='option_path' id='selectAA' value='"+option+"'>";
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectA").remove();
+			$("#selectAA").remove();
+		} else {
+			var copyThisA = $(this).clone();
+
+			if ($("#selectA").length > 0) {
+
+				$("#selectA a").html($(this).text());
+
+				$("#selectAA").val(option);
+			} else {
+
+				$(".select-result dl").append(html);
+				$(".select-result dl").append(copyThisA.attr("id", "selectA"));
+
+			}
+		}
+
+			var e = '';
+			$("input[name = option_path]").each(function(){
+				if(e.length == 0 ){
+					e += $(this).val();
+				}else{
+					e += ','+$(this).val();
+				}
+			})
+
+			var zoption_path = e;
+			var action = "{:U('Web/Search/ajax_search')}";
+			var zcategory = $('#category').val();
+			var zbrand = $('#brand').val();
+			var zclassify = $('#classify').val();
+
+
+			$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+				var json = eval("("+data+")");
+				$('#lsit_page').empty();
+				$('#bread').empty();
+//				$('#brand_sel').html(json.datas.brand_str);
+				$('#bread').html(json.datas.bread_list);
+				$('#count').html(json.datas.count);
+				$('#lsit_page').html(json.datas.page);
+			});
+
+
+		});
+
+	$("#select2 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		var option = $(this).attr('option');
+		var html = "<input type='hidden' name='option_path' id='selectBB' value='"+option+"'>";
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectB").remove();
+			$("#selectBB").remove();
+		} else {
+			var copyThisB = $(this).clone();
+			if ($("#selectB").length > 0) {
+				$("#selectB a").html($(this).text());
+				$("#selectBB").val(option);
+			} else {
+				$(".select-result dl").append(copyThisB.attr("id", "selectB"));
+				$(".select-result dl").append(html);
+			}
+		}
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+
+		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+		});
+
+
+	});
+
+	$("#select3 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+
+		var option = $(this).attr('option');
+		var html = "<input type='hidden' name='option_path' id='selectCC' value='"+option+"'>";
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectC").remove();
+			$("#selectCC").remove();
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectC").length > 0) {
+				$("#selectC a").html($(this).text());
+				$("#selectCC").val(option);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectC"));
+				$(".select-result dl").append(html);
+			}
+		}
+
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+
+		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+		});
+
+
+	});
+
+	$("#select4 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+
+		var option = $(this).attr('option');
+		var html = "<input type='hidden' name='option_path' id='selectDD' value='"+option+"'>";
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectD").remove();
+			$("#selectDD").remove();
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectD").length > 0) {
+				$("#selectD a").html($(this).text());
+				$("#selectDD").val(option);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectD"));
+				$(".select-result dl").append(html);
+			}
+		}
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+
+		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+		});
+
+
+
+	});
+
+	$("#select5 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		var option = $(this).attr('option');
+		var html = "<input type='hidden' name='option_path' id='selectEE' value='"+option+"'>";
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectE").remove();
+			$("#selectEE").remove();
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectE").length > 0) {
+				$("#selectE a").html($(this).text());
+				$("#selectEE").val(option);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectE"));
+				$(".select-result dl").append(html);
+			}
+		}
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+
+		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+		});
+
+
+	});
+
+	$("#select6 dd").click(function () {
+		$(this).addClass("selected").siblings().removeClass("selected");
+		var option = $(this).attr('option');
+		var html = "<input type='hidden' name='option_path' id='selectFF' value='"+option+"'>";
+
+		if ($(this).hasClass("select-all")) {
+			$("#selectF").remove();
+			$("#selectFF").remove();
+		} else {
+			var copyThisC = $(this).clone();
+			if ($("#selectF").length > 0) {
+				$("#selectF a").html($(this).text());
+				$("#selectFF").val(option);
+			} else {
+				$(".select-result dl").append(copyThisC.attr("id", "selectF"));
+				$(".select-result dl").append(html);
+			}
+		}
+
+		var e = '';
+		$("input[name = option_path]").each(function(){
+			if(e.length == 0 ){
+				e += $(this).val();
+			}else{
+				e += ','+$(this).val();
+			}
+		})
+
+		var zoption_path = e;
+		var action = "{:U('Web/Search/ajax_search')}";
+		var zcategory = $('#category').val();
+		var zbrand = $('#brand').val();
+		var zclassify = $('#classify').val();
+
+
+		$.post(action,{option_path:zoption_path,category:zcategory,brand:zbrand,classify:zclassify},function(data){
+			var json = eval("("+data+")");
+			$('#lsit_page').empty();
+			$('#bread').empty();
+//			$('#brand_sel').html(json.datas.brand_str);
+			$('#bread').html(json.datas.bread_list);
+			$('#count').html(json.datas.count);
+			$('#lsit_page').html(json.datas.page);
+		});
+
+
+	});
+
+	$("#brandA").live("click", function () {
+		$(this).remove();
+		$('#brand').remove();
+		$("#brand1 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+
+	$("#classifyA").live("click", function () {
+		$(this).remove();
+		$('#classify').remove();
+		$("#classify1 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+	
+	$("#selectA").live("click", function () {
+		$(this).remove();
+		$('#selectAA').remove();
+		$("#select1 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectB").live("click", function () {
+		$(this).remove();
+		$('#selectBB').remove();
+		$("#select2 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectC").live("click", function () {
+		$(this).remove();
+		$('#selectCC').remove();
+		$("#select3 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectD").live("click", function () {
+		$(this).remove();
+		$('#selectDD').remove();
+		$("#select4 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectE").live("click", function () {
+		$(this).remove();
+		$('#selectEE').remove();
+		$("#select5 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+
+	$("#selectF").live("click", function () {
+		$(this).remove();
+		$('#selectFF').remove();
+		$("#select6 .select-all").addClass("selected").siblings().removeClass("selected");
+	});
+	
+	$(".select dd").live("click", function () {
+		if ($(".select-result dd").length > 1) {
+			$(".select-no").hide();
+		} else {
+			$(".select-no").show();
+		}
+	});
+	
+});
+</script>

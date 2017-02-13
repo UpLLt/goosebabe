@@ -1,0 +1,50 @@
+<admintpl file="header" />
+</head>
+<body style="min-width: 800px;">
+<div class="wrap js-check-wrap">
+    <!--<ul class="nav nav-tabs">-->
+        <!--<li class="active">版面列表</li>-->
+    <!--</ul>-->
+    <form class="js-ajax-form" method="post">
+        <div class="table-actions">
+            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Appset/pagedelete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+                <th width="50">ID</th>
+                <th width="100">版面名称</th>
+                <th width="150">版面标识</th>
+                <th width="80">操作</th>
+            </tr>
+            </thead>
+            <php>$status=array("1"=>L('AUDITED'),"0"=>L('NOT_AUDITED'));</php>
+            <foreach name="categorys" item="vo">
+                <tr>
+                    <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.pname}</td>
+                    <td>{$vo.sign}</td>
+                    <td>{$vo.str_manage}</td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+                <th width="50">ID</th>
+                <th width="100">版面名称</th>
+                <th width="150">版面标识</th>
+                <th width="80">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+        </div>
+        <div class="pagination">{$Page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

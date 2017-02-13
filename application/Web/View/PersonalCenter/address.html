@@ -1,0 +1,110 @@
+<include file="./application/Web/View/header.html"/>
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+	<style>
+		#bac_cent a{
+			color: #fff;
+			border-radius: 5px;
+			background:#fb821a;
+			width: 100%;
+			display: block;
+		}
+		.add_ress li b red{
+			color: #ff0000;
+			margin: 0px 5px 0px 0px;
+			line-height:40px;
+		}
+	</style>
+	<!-- banner -->
+	<div class="main">
+		<div class="cent">
+			<div class="user_center">
+				<div class="user_menu">
+					<h1>个人中心</h1>
+					<li><a href="{:U('PersonalCenter/orderList',array('key'=>'all'))}">我的订单</a></li>
+					<li class="action"><a href="{:U('PersonalCenter/address_list')}">收货地址</a></li>
+					<li><a href="{:U('PersonalCenter/password')}">修改密码</a></li>
+					<li ><a href="{:U('PersonalCenter/infomation')}">修改信息</a></li>
+					<img src="__PUBLIC__/Web/images/logo.png" />
+				</div>
+
+				<div class="user_address">
+					<div class="address_show">
+						<h1>我的地址</h1>
+						<img src="__PUBLIC__/Web/images/shadow.png" />
+					</div>
+
+					<form id="form_1">
+
+					<div class="add_ress">
+						
+
+						<li><b><red>*</red>详细地址：</b><input type="text" name="address" placeholder="例如街道名称、门牌号、楼层和房号等信息" /></li>
+
+						<li><b><red>*</red>收货人姓名：</b><input type="text" name="fullname" placeholder="长度不超过20个字" maxlength="20"></li>
+
+						<li><b><red>*</red>手机号码：</b><input type="text" name="shopping_telephone" placeholder="请输入手机号" /></li>
+
+						<li><b>&nbsp;</b><input type="button"  onclick="but()" class="submit_add" value="保 存" /></li>
+					</div>
+
+					</form>
+
+					<div class="edit_address">
+						<h1><span>收货人</span><span>详细地址</span><span>手机号</span><span>操作</span></h1>
+
+						<foreach name="address" item="vo">
+							<li>
+								<span>{$vo.fullname}</span>
+								<span>{$vo.address}</span>
+								<span>{$vo.shopping_telephone}</span>
+								<span><a href="{:U('PersonalCenter/addressDelete',array('id'=>$vo['id']))}">删除</a></span>
+							</li>
+
+						</foreach>
+					</div>
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+
+<!-- footer -->
+<include file="./application/Web/View/footer.html"/>
+
+
+<!-- jquery -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/address.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Web/js/area.js"></script>
+<!-- 弹窗 -->
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.layer.js"></script>
+
+<script type="text/javascript">
+
+	function but(){
+		$.post('{:U("PersonalCenter/addressAdd")}', $('#form_1').serialize(),function(data){
+			var json = eval("("+data+")");
+			if(json.code == 220 ){
+				layer.msg("您未登陆，请先登录",{icon: 2});window.location.href = "{:U('Login/index',array('key'=>1))}";
+			}
+			if(json.code == 300 ){
+				layer.msg("请补全表单");
+			}else if(json.code == 200){
+				layer.msg("增加成功");location.reload();
+			}else{
+				layer.msg(json.mark );
+			}
+		})
+
+	}
+
+</script>

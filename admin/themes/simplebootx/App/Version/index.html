@@ -1,0 +1,41 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">app版本控制</a></li>
+    </ul>
+    <form action="{:U('Version/edit_post')}" method="post" class="form-horizontal js-ajax-form"
+          enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">版本号</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="options[version_sn]" required
+                                   value="{$data.version_sn}"
+                                   placeholder=""/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="80">下载地址</th>
+                        <td>
+                            <input type="text" style="width:400px;" name="options[download_url]" required
+                                   value="{$data.download_url}"
+                                   placeholder=""/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

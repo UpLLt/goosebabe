@@ -1,0 +1,88 @@
+<include file="./application/Web/View/header.html"/>
+
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/index.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/main.css" />
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/style.css" />
+
+	<!-- jquery -->
+	<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.min.js"></script>
+
+	<!-- 弹窗 -->
+	<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.layer.js"></script>
+<style>
+	#bac_shop a{
+		color: #fff;
+		border-radius: 5px;
+		background:#fb821a;
+		width: 100%;
+		display: block;
+	}
+</style>
+	<!-- banner -->
+	<div class="main">
+		<div class="cent">
+			<div class="address_show shops">
+				<h1>评价宝贝</h1>
+				<img src="__PUBLIC__/Web/images/shadow.png" />
+			</div>
+
+			<div class="immediate_eval">
+				
+				<div class="eval_left">
+					<img src="{$list.picture}" />
+					<h1>{$list.name}</h1>
+					<p>产地：{$list.ship_address}</p>
+				</div>
+
+				<div class="eval_right">
+					<form id="form_1" action="#" >
+						<textarea name="content" placeholder="亲！ 您对宝贝的评价可能会帮助到其他买家哦！"></textarea>
+						<input type="hidden" name="order_product_id" value="{$list.order_product_id}" >
+						<input type="button" onclick="btn()" value="提 交" />
+					</form>
+				</div>
+
+
+			</div>
+			
+			
+		</div>
+
+<!-- footer -->
+<include file="./application/Web/View/footer.html"/>
+
+<script language=javascript>
+	$("#all").click(function(){    
+    if(this.checked){    
+        $("#shoping_all :checkbox").attr("checked", true);   
+    }else{    
+        $("#shoping_all :checkbox").attr("checked", false); 
+    } 
+}); 
+</script>
+
+<script >
+
+	function btn(){
+
+		$.post('{:U("Comment/commentOrder")}', $('#form_1').serialize(),function(data){
+			var json = eval("("+data+")");
+			if(json.code == 300 ){
+				layer.msg("评价内容不能为空");
+			}else if(json.code == 200){
+				layer.msg("评价成功");window.location.href = "{:U('PersonalCenter/orderList',array('key'=>all))}";
+			}else{
+				layer.msg(json.mark );
+			}
+		})
+	}
+
+
+</script>
+
+

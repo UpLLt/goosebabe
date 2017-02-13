@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>母婴电商</title>
+
+	<!-- g公共部分 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/user.css" />
+	<!-- 字体图片 -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Web/css/font-awesome.min.css" />
+
+</head>
+<body>
+
+
+<div class="user_head">
+	<div class="cent">
+		<div class="user_logo"><a href="index.html"><img src="__PUBLIC__/Web/images/user_logo.png" /></a></div>
+	</div>
+</div>
+
+<div class="login">
+	<div class="cent">
+		<div class="login_more">
+			<img src="__PUBLIC__/Web/images/login_more.png" />
+		</div>
+		<div class="user_login west">
+			<h1>注册Goosebabe</h1>
+			<form action="#">
+				<li><b><img src="__PUBLIC__/Web/images/username.png" /></b><input type="text" id="phone" placeholder="请输入手机号" maxlength="11" /></li>
+				<li><b><img src="__PUBLIC__/Web/images/userpwd.png" /></b><input type="password"  id="password" placeholder="密码" maxlength="16" /></li>
+				<li><b><img src="__PUBLIC__/Web/images/userpwd.png" /></b><input type="password"  id="re_password" placeholder="确认密码" maxlength="16" /></li>
+				<div class="user_code">
+					<input type="text" id="vcode" placeholder="输入验证码" />
+					{:sp_verifycode_img('length=4&font_size=20&width=145&height=42&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}
+				</div>
+				<div class="user_code">
+					<input type="text" id="code" placeholder="短信验证码" />
+					<a href="javascript:" id="user_code">获取短信验证码</a><b>&nbsp;</b>
+				</div>
+
+				<div class="user_sumbt">
+					<input type="button" id="button" onclick="but()" value="注 册" />
+				</div>
+
+				<div class="user_more">
+					<a href="{:U('Login/index')}">立即登录</a>
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="footer">
+	<p>Copyright © 2016 goosebabe有限公司 goosebabe.com 保留一切权利。 客服热线：400-789-12345 京ICP证140430号 京ICP备14006215号</p>
+</div>
+
+</body>
+</html>
+
+<script type="text/javascript" src="__PUBLIC__/Web/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Web/js/layer.js"></script>
+<script type="text/javascript">
+
+</script>
+
+<script >
+	var wait = 60;
+	function time(o) {
+		if (wait == 0) {
+			$(".user_code a").css("display","block");
+			$(".user_code b").css("display","none");
+			wait = 60;
+		} else {
+			$(".user_code a").css("display","none");
+			$(".user_code b").css("display","block");
+			$(".user_code b").html("重新发送 (" + wait + ")");
+			wait--;
+			setTimeout(function() {
+						time(o)
+					},
+					1000);
+		}
+	}
+
+	$('#user_code').on('click', function(){
+		var z_phone = $('#phone').val();
+		var action  = "{:U('Appapi/Member/sendsms')}";
+		$.post(action,{phone:z_phone},function(data){
+			var json = eval("("+data+")");
+			if(json.code == 300 ){
+				layer.alert("手机号码不能为空", {icon: 2});
+			}else if(json.code == 200){
+				layer.tips('短信发送成功。', '#user_code', {
+					tips: [1, '#3595CC'],
+					time: 4000
+				});
+				time(this)
+			}else{
+				layer.alert(json.mark, {icon: 2});
+			}
+		})
+
+
+	})
+
+	function but(){
+		var z_phone = $('#phone').val();
+		var z_password = $('#password').val();
+		var z_re_password = $('#re_password').val();
+		var z_code      =  $('#code').val();
+		var z_vcode     =  $('#vcode').val();
+		var action  = "{:U('Web/Register/register')}";
+
+		if( z_password != z_re_password){
+			layer.alert("两次密码必须一致", {icon: 2});
+			return false;
+		}
+
+		$.post(action,{phone:z_phone,code:z_code,vcode:z_vcode,password:z_password},function(data){
+			var json = eval("("+data+")");
+			if(json.code == 300 ){
+				layer.alert("表单信息不能为空", {icon: 2});
+			}else if(json.code == 200){
+				alert('注册成功');window.location.href = "{:U('Web/Login/index')}";
+			}else{
+				layer.alert(json.mark, {icon: 2});
+			}
+
+		})
+
+	}
+
+</script>

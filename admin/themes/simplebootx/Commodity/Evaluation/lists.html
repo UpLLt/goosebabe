@@ -1,0 +1,30 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">评价</a></li>
+    </ul>
+    <div class="pull-right"><a class="js-ajax-dialog-btn btn-info btn" href="{:U('Evaluation/allshow')}">全部显示</a></div>
+    <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+           id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>评论人</th>
+            <th>商品名称</th>
+            <th>状态</th>
+            <th>评价内容</th>
+            <th>时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {$tablebody}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

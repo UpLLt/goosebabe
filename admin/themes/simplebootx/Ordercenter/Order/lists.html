@@ -1,0 +1,54 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">订单列表</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Order/lists')}">
+        订单编号：
+        <input type="text" name="keyword" style="width: 120px;" value="{$formget.keyword}" placeholder="">
+        电话号码：
+        <input type="text" name="username" style="width: 120px;" value="{$formget.username}" placeholder="">
+        时间：
+        <input type="text" name="start_time" class="js-date" value="{$formget.start_time|default=''}" style="width: 80px;" autocomplete="off">-
+        <input type="text" class="js-date" name="end_time" value="{$formget.end_time}" style="width: 80px;" autocomplete="off">
+        订单状态：
+        <select class="select_status" style="width: 100px;" name="select_status">
+            <option value='0'>全部</option>
+            {$status_model}
+        </select>
+        支付类型：
+        <select class="select_paytype" style="width: 100px;" name="select_paytype">
+            <option value='0'>全部</option>
+            {$paytype_model}
+        </select>
+        <input type="submit" style="margin-left: 5px;" class="btn btn-primary" value="搜索"/>
+    </form>
+
+    <table style="margin-top: 10px;word-break:break-all;" class="table table-hover table-bordered table-list"
+           id="menus-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>订单编号</th>
+            <th>用户名</th>
+            <th>金额</th>
+            <th>支付金额</th>
+            <th>状态</th>
+            <th>支付方式</th>
+            <th>下单时间</th>
+            <th>修改时间</th>
+            <th>付款时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {$categorys}
+        </tbody>
+    </table>
+    <div class="pagination">{$Page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
